@@ -1,0 +1,7 @@
+[workspace]
+members = [
+    "api/lib",
+    "api/axum",
+    "shared",
+]
+resolver = "2"

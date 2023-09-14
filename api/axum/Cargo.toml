@@ -1,0 +1,17 @@
+[package]
+name = "api-id-assigner"
+description = "Axum powered API to manage ids for hostnames of a sulrm cluster"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+api-id-assigner-lib = { path = "../lib" }
+axum = "0.6.18"
+axum-extra = { version = "0.7.7" }
+serde = { version = "1.0.188", features = ["serde_derive"] }
+sqlx = { version = "0.7.1", features = ["sqlite"] }
+tokio = {version = "1.28.2", features = ["full"]}
+toml = "0.8.0"
+tower = "0.4.13"
+tower-http = { version = "0.4.3", features = ["fs","cors"] }
+tracing = "0.1.37"

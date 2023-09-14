@@ -1,0 +1,23 @@
+[package]
+name = "api-id-assigner-lib"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+shared = { path = "../../shared" ,features = ["backend"]}
+sqlx = { version = "0.7.1", default-features = false, features = [ "runtime-async-std-native-tls", "macros", "postgres", "uuid", "chrono", "json" ] }
+tracing = "0.1.37"
+async-traits = "0.0.0"
+uuid = { version = "1.4.1", features = ["serde", "v4", "js"] }
+async-trait = "0.1.73"
+axum = "0.6.20"
+tower-http = { version = "0.4.3", features = ["cors", "tower"] }
+http = "0.2.9"
+rand = "0.8.5"
+serde = { version = "1.0.185", features = ["derive"] }
+serde_json = "1.0.105"
+chrono = "0.4.26"
+time = { version = "0.3.0", features = ["serde"] }
+
