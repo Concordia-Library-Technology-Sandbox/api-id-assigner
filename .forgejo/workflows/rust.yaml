@@ -1,0 +1,36 @@
+
+name: Build and upload a binary on tag push
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-release:
+    runs-on: docker
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup toolchian
+        uses: https://github.com/dtolnay/rust-toolchain@stable
+      - name: Build
+        run: |
+          export BIN_NAME="api-id-assigner"
+          export VER=$(awk -F "=" '/version/ {print $2}' Cargo.toml | grep -o -e '[0-9]*\.[0-9]*\.[0-9]*')
+          cargo build --release
+          mkdir release
+          cp target/release/$BIN_NAME release/$BIN_NAME-$VER
+          chmod +x release/$BIN_NAME-$VER
+          xz --keep -9 release/$BIN_NAME-$VER
+          shasum -a 256 release/$BIN_NAME-$VER > release/$BIN_NAME-$VER.sha256
+          shasum -a 256 release/$BIN_NAME-$VER.xz > release/$BIN_NAME-$VER.xz.sha256
+      - name: Upload release
+        uses: actions/forgejo-release@v1
+        with:
+          direction: upload
+          url: https://git.technoduck.me
+          token: ${{secrets.app_token}}
+          release-dir: release
+          verbose: true
+
+
