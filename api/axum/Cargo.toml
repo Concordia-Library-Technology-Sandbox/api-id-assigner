@@ -2,7 +2,7 @@
 authors = ["Technoduck"]
 name = "api-id-assigner"
 description = "Axum powered API to manage ids for hostnames of a sulrm cluster"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 
 [package.metadata.deb]
