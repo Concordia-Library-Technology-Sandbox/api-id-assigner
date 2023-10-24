@@ -22,25 +22,25 @@ async fn main() -> Result<(), sqlx::Error>{
 
 
 
-    if !cfg!(debug_assertions){
-        //check if running in production or debug env.
-        if !std::path::Path::new("/var/assigner").exists() {
-            println!("in release creating folder");
-            match fs::create_dir_all("/var/assigner") {
-                Ok(_res) => println!("Directory created succesfully"),
-                Err(err) => panic!("cannot create dir {err}")
-            }
+   // if !cfg!(debug_assertions){
+   //     //check if running in production or debug env.
+   //     if !std::path::Path::new("/var/assigner").exists() {
+   //         println!("in release creating folder");
+   //         match fs::create_dir_all("/var/assigner") {
+   //             Ok(_res) => println!("Directory created succesfully"),
+   //             Err(err) => panic!("cannot create dir {err}")
+   //         }
 
-        } 
-        //check if config file exists, if not, write default values in it
-        if !std::path::Path::new("/var/assigner/config.toml").exists() {
-            println!("config file doesnt exist");
-            let _ = match fs::write(Path::new("/var/assigner/config.toml"), b"ip = '0.0.0.0'\nport = 2000\ndb_location = '/var/assigner/db.sqlite'"){
-                Ok(res) => res,
-                Err(err) => panic!("error: {err}")
-            };
-        }
-    }
+   //     } 
+   //     //check if config file exists, if not, write default values in it
+   //     if !std::path::Path::new("/var/assigner/config.toml").exists() {
+   //         println!("config file doesnt exist");
+   //         let _ = match fs::write(Path::new("/var/assigner/config.toml"), b"ip = '0.0.0.0'\nport = 2000\ndb_location = '/var/assigner/db.sqlite'"){
+   //             Ok(res) => res,
+   //             Err(err) => panic!("error: {err}")
+   //         };
+   //     }
+   // }
 
     // read the toml config file into a string, if file not found give default values
     let config_string = match fs::read_to_string("/var/assigner/config.toml") {

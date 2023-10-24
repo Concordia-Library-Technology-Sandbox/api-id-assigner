@@ -24,6 +24,14 @@ jobs:
           xz --keep -9 release/$BIN_NAME-$VER
           shasum -a 256 release/$BIN_NAME-$VER > release/$BIN_NAME-$VER.sha256
           shasum -a 256 release/$BIN_NAME-$VER.xz > release/$BIN_NAME-$VER.xz.sha256
+      - name: Deb build
+        run: |
+          export BIN_NAME="api-id-assigner"
+          export VER=$(awk -F "=" '/version/ {print $2}' api/axum/Cargo.toml | grep -o -e '[0-9]*\.[0-9]*\.[0-9]*')
+          cargo install cargo-deb
+          cargo deb -p $BIN_NAME
+          cp target/debian/${BIN_NAME}_${VER}-1_amd64.deb release/${BIN_NAME}_${VER}-1_amd64.deb
+          shasum -a 256 release/${BIN_NAME}_${VER}-1_amd64.deb > release/${BIN_NAME}_${VER}-1_amd64.deb.sha256
       - name: Upload release
         uses: actions/forgejo-release@v1
         with:

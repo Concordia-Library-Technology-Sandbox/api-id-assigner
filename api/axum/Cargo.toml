@@ -1,8 +1,15 @@
 [package]
+authors = ["Technoduck"]
 name = "api-id-assigner"
 description = "Axum powered API to manage ids for hostnames of a sulrm cluster"
 version = "0.1.0"
 edition = "2021"
+
+[package.metadata.deb]
+assets = [
+["config.toml","/var/assigner/", "644"],
+["db.sqlite","/var/assigner/", "644"],
+]
 
 [dependencies]
 api-id-assigner-lib = { path = "../lib" }
@@ -15,3 +22,6 @@ toml = "0.8.0"
 tower = "0.4.13"
 tower-http = { version = "0.4.3", features = ["fs","cors"] }
 tracing = "0.1.37"
+
+[build-dependencies]
+cargo-deb = "2.0.0"
